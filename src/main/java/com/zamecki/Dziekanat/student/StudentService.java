@@ -1,8 +1,7 @@
 package com.zamecki.Dziekanat.student;
 
+import com.zamecki.Dziekanat.fieldofstudy.FieldOfStudy;
 import com.zamecki.Dziekanat.student.dto.RequestResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -140,6 +140,34 @@ public class StudentService {
             return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
         }
     }
-
+    public ResponseEntity<List<RequestResponseDto>>findAllByFieldOfStudy(@NotNull FieldOfStudy fieldOfStudy){
+        List<Student> dbStudents=studentRepository.findAllByFieldsOfStudyContaining(fieldOfStudy);
+            List<RequestResponseDto> dtoStudents=dbStudents.stream().map(this::StudentToDto).toList();
+            if(!dtoStudents.isEmpty()){
+                return new ResponseEntity<>(dtoStudents,HttpStatus.OK);
+            }else{
+                return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+            }
+    }
+    public ResponseEntity<String> deleteByPesel(String pesel){
+        try {
+            Optional<Student> studentOptional = Optional.of(studentRepository.findByPesel(pesel).orElseThrow(ChangeSetPersister.NotFoundException::new));
+            studentRepository.deleteByPesel(pesel);
+            return new ResponseEntity<>("Student with pesel:"+pesel+" has been successfully deleted",HttpStatus.OK);
+        }
+        catch (ChangeSetPersister.NotFoundException exception){
+            return new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+    public ResponseEntity<String> deleteByIndexNumber(String indexNumber){
+        try {
+            Optional<Student> studentOptional = Optional.of(studentRepository.findByIndexNumber(indexNumber).orElseThrow(ChangeSetPersister.NotFoundException::new));
+            studentRepository.deleteByIndexNumber(indexNumber);
+            return new ResponseEntity<>("Student with index number:"+indexNumber+" has been successfully deleted",HttpStatus.OK);
+        }
+        catch (ChangeSetPersister.NotFoundException exception){
+            return new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

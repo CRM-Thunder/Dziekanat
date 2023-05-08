@@ -1,8 +1,7 @@
 package com.zamecki.Dziekanat.student;
 
+import com.zamecki.Dziekanat.fieldofstudy.FieldOfStudy;
 import com.zamecki.Dziekanat.student.dto.RequestResponseDto;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +58,20 @@ public class StudentController {
     public ResponseEntity<List<RequestResponseDto>>findAllByIsMale(@PathVariable(name="isMale")Boolean isMale){
         return studentService.findAllByIsMale(isMale);
     }
+    @GetMapping("/fieldOfStudy")
+    public ResponseEntity<List<RequestResponseDto>> findAllByFieldOfStudy(@RequestBody FieldOfStudy fieldOfStudy){
+        return studentService.findAllByFieldOfStudy(fieldOfStudy);
+    }
+    @DeleteMapping("/pesel/{pesel}")
+    public ResponseEntity<String> deleteByPesel(@PathVariable String pesel){
+        return studentService.deleteByPesel(pesel);
+    }
+
+    @DeleteMapping("/indexNumber/{indexNumber}")
+    public ResponseEntity<String> deleteByIndexNumber(@PathVariable String indexNumber){
+        return studentService.deleteByIndexNumber(indexNumber);
+    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.zamecki.Dziekanat.student;
 
+import com.zamecki.Dziekanat.fieldofstudy.FieldOfStudy;
 import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
@@ -17,5 +18,8 @@ public interface StudentRepository extends MongoRepository<Student, ObjectId> {
     public List <Student> findAllByIsMale(Boolean isMale);
     public Optional<Student> findByEmail(String email);
     public Optional<Student> findByPhoneNumber(String phoneNumber);
-    //TODO obsluzyc request z wyszukaniem uzytkownikow z danego kierunku
+    public List<Student>findAllByFieldsOfStudyContaining(FieldOfStudy fieldOfStudy);
+
+    public void deleteByPesel(String pesel);
+    public void deleteByIndexNumber(String indexNumber);
 }
