@@ -20,7 +20,7 @@ import java.util.List;
 public class Student {
     @Id
     private String id;
-    private Date createdAt;
+    private String createdAt;
     private String pesel;
     private String indexNumber;
     private String name;

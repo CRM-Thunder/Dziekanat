@@ -6,13 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class RequestResponseDto {
+public class StudentReqResDto {
     private String pesel;
     private String indexNumber;
     private String name;
