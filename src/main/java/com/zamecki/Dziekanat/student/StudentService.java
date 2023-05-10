@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StudentService {
     @Autowired
-    StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public ResponseEntity<String> addStudent(@NotNull StudentReqResDto requestDto){
         studentRepository.save(Student.builder()
