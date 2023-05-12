@@ -1,5 +1,6 @@
 package com.zamecki.Dziekanat.exceptions;
 
+import com.zamecki.Dziekanat.exceptions.errorresponses.SingleArgumentErrorResponse;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -13,7 +14,7 @@ public class StudentNotFoundException extends RuntimeException{
         this.httpStatus=httpStatus;
     }
 
-    public ErrorResponse getErrorResponse(){
-        return ErrorResponse.builder().timestamp(new Date().toString()).message(this.getMessage()).errorCode(httpStatus.value()).status(String.valueOf(httpStatus)).build();
+    public SingleArgumentErrorResponse getErrorResponse(){
+        return SingleArgumentErrorResponse.builder().timestamp(new Date().toString()).message(this.getMessage()).errorCode(httpStatus.value()).status(String.valueOf(httpStatus)).build();
     }
 }

@@ -141,18 +141,18 @@ public class StudentService {
     }
     public ResponseEntity<String> deleteByPesel(String pesel) throws StudentNotFoundException{
 
-            Optional<Student> studentOptional = Optional.ofNullable(studentRepository.findByPesel(pesel).orElseThrow(()->new StudentNotFoundException("Student with pesel:" + pesel + " not found and not deleted", HttpStatus.BAD_REQUEST)));
+            Optional<Student> studentOptional = Optional.ofNullable(studentRepository.findByPesel(pesel).orElseThrow(()->new StudentNotFoundException("Student with pesel:" + pesel + " not found and not deleted", HttpStatus.NOT_FOUND)));
             studentRepository.deleteByPesel(pesel);
             return new ResponseEntity<>("Student with pesel:"+pesel+" has been successfully deleted",HttpStatus.OK);
 
     }
     public ResponseEntity<String> deleteByIndexNumber(String indexNumber) throws StudentNotFoundException{
-            Optional<Student> studentOptional = Optional.ofNullable(studentRepository.findByIndexNumber(indexNumber).orElseThrow(()->new StudentNotFoundException("Student with indexNumber:" + indexNumber + " not found and not deleted", HttpStatus.BAD_REQUEST)));
+            Optional<Student> studentOptional = Optional.ofNullable(studentRepository.findByIndexNumber(indexNumber).orElseThrow(()->new StudentNotFoundException("Student with indexNumber:" + indexNumber + " not found and not deleted", HttpStatus.NOT_FOUND)));
             studentRepository.deleteByIndexNumber(indexNumber);
             return new ResponseEntity<>("Student with index number:"+indexNumber+" has been successfully deleted",HttpStatus.OK);
     }
     public ResponseEntity<String>updateStudent(@NotNull StudentReqResDto studentDto) throws StudentNotFoundException{
-            Optional<Student> dbStudent = Optional.ofNullable(studentRepository.findByPesel(studentDto.getPesel()).orElseThrow(()->new StudentNotFoundException("Student with pesel:" + studentDto.getPesel() + " not found and not modified", HttpStatus.BAD_REQUEST)));
+            Optional<Student> dbStudent = Optional.ofNullable(studentRepository.findByPesel(studentDto.getPesel()).orElseThrow(()->new StudentNotFoundException("Student with pesel:" + studentDto.getPesel() + " not found and not modified", HttpStatus.NOT_FOUND)));
 
             dbStudent.get().setIndexNumber(studentDto.getIndexNumber());
             dbStudent.get().setName(studentDto.getName());

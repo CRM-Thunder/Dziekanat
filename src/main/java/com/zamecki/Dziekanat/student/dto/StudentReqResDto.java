@@ -20,19 +20,19 @@ public class StudentReqResDto {
     private String pesel;
     @Pattern(regexp = "\\d{6}", message = "wrong index number pattern!")
     private String indexNumber;
-    @Length(min=2, max=20)
-    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+")
+    @Length(min=2, max=20, message = "wrong name length!")
+    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+", message = "wrong name pattern!")
     private String name;
-    @Length(min=2, max=20)
-    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+")
+    @Length(min=2, max=20, message = "wrong surname length!")
+    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+", message = "wrong surname pattern!")
     private String surname;
-    @Length(min=2, max=30)
-    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+")
+    @Length(min=2, max=30, message="wrong nationality length!")
+    @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+", message = "wrong nationality pattern!")
     private String nationality;
     private Boolean isMale;
     @Email(regexp ="^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$",message = "wrong email pattern!")
     private String email;
-    @Pattern(regexp = "\\d{9}")
+    @Pattern(regexp = "\\d{9}", message = "wrong phone number pattern!")
     private String phoneNumber;
     @Valid
     private List<FieldOfStudy> fieldsOfStudy;

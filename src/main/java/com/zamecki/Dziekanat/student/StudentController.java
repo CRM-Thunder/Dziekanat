@@ -45,19 +45,19 @@ public class StudentController {
         return studentService.findByEmail(email);
     }
     @GetMapping("/phoneNumber/{phoneNumber}")
-    public ResponseEntity<StudentReqResDto> findByPhoneNumber(@PathVariable(name="phoneNumber") @Pattern(regexp = "\\d{9}") String phoneNumber){
+    public ResponseEntity<StudentReqResDto> findByPhoneNumber(@PathVariable(name="phoneNumber") @Pattern(regexp = "\\d{9}", message = "wrong phone number pattern!") String phoneNumber){
         return studentService.findByPhoneNumber(phoneNumber);
     }
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<StudentReqResDto>>findAllByName(@PathVariable(name="name") @Length(min=2, max=20) @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+") String name){
+    public ResponseEntity<List<StudentReqResDto>>findAllByName(@PathVariable(name="name") @Length(min=2, max=20, message = "wrong name length!") @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+", message="wrong name pattern!") String name){
         return studentService.findAllByName(name);
     }
     @GetMapping("/surname/{surname}")
-    public ResponseEntity<List<StudentReqResDto>>findAllBySurname(@PathVariable(name="surname") @Length(min=2, max=20) @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+") String surname){
+    public ResponseEntity<List<StudentReqResDto>>findAllBySurname(@PathVariable(name="surname") @Length(min=2, max=20, message = "wrong surname length!") @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+", message = "wrong surname pattern!") String surname){
         return studentService.findAllBySurname(surname);
     }
     @GetMapping("/nationality/{nationality}")
-    public ResponseEntity<List<StudentReqResDto>>findAllByNationality(@PathVariable(name="nationality") @Length(min=2, max=30) @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+") String nationality){
+    public ResponseEntity<List<StudentReqResDto>>findAllByNationality(@PathVariable(name="nationality") @Length(min=2, max=30, message = "wrong nationality length!") @Pattern(regexp = "[a-zA-ZąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+", message = "wrong nationality pattern!") String nationality){
         return studentService.findAllByNationality(nationality);
     }
     @GetMapping("/isMale/{isMale}")
