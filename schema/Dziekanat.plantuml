@@ -1,0 +1,182 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class DziekanatApplication {
+  + DziekanatApplication(): 
+  + main(String[]): void
+}
+class FieldOfStudy {
+  + FieldOfStudy(): 
+  + FieldOfStudy(String, Integer): 
+  - code: String
+  - semester: Integer
+  + equals(Object): boolean
+  # canEqual(Object): boolean
+  + hashCode(): int
+  + toString(): String
+  + builder(): FieldOfStudyBuilder
+   semester: Integer
+   code: String
+}
+class GlobalExceptionHandler {
+  + GlobalExceptionHandler(): 
+  + handleStudentNotFoundException(StudentNotFoundException): ResponseEntity<SingleArgumentErrorResponse>
+  + handleConstraintViolationException(ConstraintViolationException): ResponseEntity<SingleArgumentErrorResponse>
+  + handleMethodArgumentNotValidException(MethodArgumentNotValidException): ResponseEntity<MultipleArgumentsErrorResponse>
+}
+class MultipleArgumentsErrorResponse {
+  ~ MultipleArgumentsErrorResponse(String, Integer, String, List<String>): 
+  - errorCode: Integer
+  - timestamp: String
+  - status: String
+  - errorMessages: List<String>
+  + builder(): MultipleArgumentsErrorResponseBuilder
+  + toString(): String
+  + equals(Object): boolean
+  # canEqual(Object): boolean
+  + hashCode(): int
+   status: String
+   timestamp: String
+   errorMessages: List<String>
+   errorCode: Integer
+}
+class SingleArgumentErrorResponse {
+  ~ SingleArgumentErrorResponse(String, Integer, String, String): 
+  - errorCode: Integer
+  - status: String
+  - timestamp: String
+  - message: String
+  + builder(): SingleArgumentErrorResponseBuilder
+  + equals(Object): boolean
+  + toString(): String
+  # canEqual(Object): boolean
+  + hashCode(): int
+   status: String
+   message: String
+   timestamp: String
+   errorCode: Integer
+}
+class Student {
+  + Student(String, String, String, String, String, String, String, Boolean, String, String, List<FieldOfStudy>): 
+  + Student(): 
+  - pesel: String
+  - surname: String
+  - email: String
+  - name: String
+  - nationality: String
+  - id: String
+  - isMale: Boolean
+  - phoneNumber: String
+  - createdAt: String
+  - fieldsOfStudy: List<FieldOfStudy>
+  - indexNumber: String
+  + hashCode(): int
+  + equals(Object): boolean
+  # canEqual(Object): boolean
+  + toString(): String
+  + builder(): StudentBuilder
+   name: String
+   pesel: String
+   indexNumber: String
+   email: String
+   phoneNumber: String
+   fieldsOfStudy: List<FieldOfStudy>
+   surname: String
+   createdAt: String
+   isMale: Boolean
+   nationality: String
+   id: String
+}
+class StudentController {
+  + StudentController(StudentService): 
+  + findAll(): ResponseEntity<List<StudentReqResDto>>
+  + updateStudent(StudentReqResDto): ResponseEntity<String>
+  + findByPesel(String): ResponseEntity<StudentReqResDto>
+  + findAllBySurname(String): ResponseEntity<List<StudentReqResDto>>
+  + deleteByIndexNumber(String): ResponseEntity<String>
+  + findByPhoneNumber(String): ResponseEntity<StudentReqResDto>
+  + findByEmail(String): ResponseEntity<StudentReqResDto>
+  + deleteByPesel(String): ResponseEntity<String>
+  + findAllByIsMale(Boolean): ResponseEntity<List<StudentReqResDto>>
+  + findAllByNationality(String): ResponseEntity<List<StudentReqResDto>>
+  + findByIndexNumber(String): ResponseEntity<StudentReqResDto>
+  + findAllByName(String): ResponseEntity<List<StudentReqResDto>>
+  + findAllByFieldOfStudy(FieldOfStudy): ResponseEntity<List<StudentReqResDto>>
+  + addStudent(StudentReqResDto): ResponseEntity<String>
+}
+class StudentNotFoundException {
+  + StudentNotFoundException(String, HttpStatus): 
+  - httpStatus: HttpStatus
+   httpStatus: HttpStatus
+   errorResponse: SingleArgumentErrorResponse
+}
+interface StudentRepository << interface >> {
+  + findByEmail(String): Optional<Student>
+  + findAll(): List<Student>
+  + findAllByIsMale(Boolean): List<Student>
+  + findAllByFieldsOfStudyContaining(FieldOfStudy): List<Student>
+  + findByPhoneNumber(String): Optional<Student>
+  + findAllByNationality(String): List<Student>
+  + findByIndexNumber(String): Optional<Student>
+  + findAllBySurname(String): List<Student>
+  + deleteByPesel(String): void
+  + deleteByIndexNumber(String): void
+  + findByPesel(String): Optional<Student>
+  + findAllByName(String): List<Student>
+}
+class StudentReqResDto {
+  + StudentReqResDto(): 
+  + StudentReqResDto(String, String, String, String, String, Boolean, String, String, List<FieldOfStudy>): 
+  - email: String
+  - fieldsOfStudy: List<FieldOfStudy>
+  - surname: String
+  - nationality: String
+  - phoneNumber: String
+  - pesel: String
+  - name: String
+  - isMale: Boolean
+  - indexNumber: String
+  + builder(): StudentReqResDtoBuilder
+  + equals(Object): boolean
+  # canEqual(Object): boolean
+  + hashCode(): int
+  + toString(): String
+   name: String
+   pesel: String
+   indexNumber: String
+   email: String
+   phoneNumber: String
+   fieldsOfStudy: List<FieldOfStudy>
+   surname: String
+   isMale: Boolean
+   nationality: String
+}
+class StudentService {
+  + StudentService(StudentRepository): 
+  + findAllByFieldOfStudy(FieldOfStudy): ResponseEntity<List<StudentReqResDto>>
+  + StudentToDto(Student): StudentReqResDto
+  + findAllByName(String): ResponseEntity<List<StudentReqResDto>>
+  + findAll(): ResponseEntity<List<StudentReqResDto>>
+  + deleteByIndexNumber(String): ResponseEntity<String>
+  + findByEmail(String): ResponseEntity<StudentReqResDto>
+  + updateStudent(StudentReqResDto): ResponseEntity<String>
+  + findAllByNationality(String): ResponseEntity<List<StudentReqResDto>>
+  + findAllByIsMale(Boolean): ResponseEntity<List<StudentReqResDto>>
+  + findAllBySurname(String): ResponseEntity<List<StudentReqResDto>>
+  + findByIndexNumber(String): ResponseEntity<StudentReqResDto>
+  + findByPesel(String): ResponseEntity<StudentReqResDto>
+  + deleteByPesel(String): ResponseEntity<String>
+  + StudentOptionalToDto(Optional<Student>): StudentReqResDto
+  + addStudent(StudentReqResDto): ResponseEntity<String>
+  + findByPhoneNumber(String): ResponseEntity<StudentReqResDto>
+}
+
+Student                        "1" *-[#595959,plain]-> "fieldsOfStudy\n*" FieldOfStudy                   
+StudentController              "1" *-[#595959,plain]-> "studentService\n1" StudentService                 
+StudentReqResDto               "1" *-[#595959,plain]-> "fieldsOfStudy\n*" FieldOfStudy                   
+StudentService                  -[#595959,dashed]->  StudentNotFoundException       : "«create»"
+StudentService                 "1" *-[#595959,plain]-> "studentRepository\n1" StudentRepository              
+@enduml
