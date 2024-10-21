@@ -14,7 +14,7 @@
 	<name>Dziekanat</name>
 	<description>Dziekanat student manager backend microservice</description>
 	<properties>
-		<java.version>20</java.version>
+		<java.version>23</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

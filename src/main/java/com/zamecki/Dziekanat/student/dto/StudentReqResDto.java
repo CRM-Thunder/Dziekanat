@@ -3,6 +3,7 @@ package com.zamecki.Dziekanat.student.dto;
 import com.zamecki.Dziekanat.fieldofstudy.FieldOfStudy;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,7 @@ import java.util.List;
 @Builder
 public class StudentReqResDto {
     @Pattern(regexp = "\\d{11}", message = "wrong pesel pattern!")
+    @NotNull(message = "pesel cannot be null!")
     private String pesel;
     @Pattern(regexp = "\\d{6}", message = "wrong index number pattern!")
     private String indexNumber;
